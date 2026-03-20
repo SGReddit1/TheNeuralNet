@@ -34,7 +34,7 @@
           Scheduler
         </a>
 
-        <a class="hover:text-white px-3 py-2 rounded">
+        <a href="view-schedule.html" class="hover:text-white px-3 py-2 rounded">
           View My Schedule
         </a>
 
@@ -126,68 +126,6 @@
         </select>
       </div>
 
-      <!-- PENDING POSTS TABLE -->
-      <div class="border border-gray-700 rounded-lg bg-[#111111] p-6 mb-10">
-        <h2 class="text-lg font-medium mb-4">Pending Posts</h2>
-
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-gray-700 text-gray-400">
-              <th class="py-2">Name</th>
-              <th class="py-2">Description</th>
-              <th class="py-2">Scheduled Time</th>
-              <th class="py-2">Post Now</th>
-            </tr>
-          </thead>
-
-          <tbody id="pendingTable" class="text-gray-300">
-
-            <!-- Example Row -->
-            <tr class="border-b border-gray-800">
-              <td contenteditable="true" class="py-3">morning_motivation.mp4</td>
-              <td contenteditable="true" class="py-3">Daily post</td>
-              <td class="py-3">March 21, 2026 – 9:00 AM</td>
-              <td class="py-3">
-                <button class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm">
-                  Post Now
-                </button>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-
-        <p class="text-sm text-gray-500 mt-4">
-          <strong>Note:</strong> Post Now overrides your schedule. All other uploads will follow your selected posting frequency.
-        </p>
-      </div>
-
-      <!-- POSTED / LIVE TABLE -->
-      <div class="border border-gray-700 rounded-lg bg-[#111111] p-6">
-        <h2 class="text-lg font-medium mb-4">Posted / Live</h2>
-
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-gray-700 text-gray-400">
-              <th class="py-2">Name</th>
-              <th class="py-2">Description</th>
-              <th class="py-2">Posted Date & Time</th>
-            </tr>
-          </thead>
-
-          <tbody id="postedTable" class="text-gray-300">
-
-            <!-- Example Row -->
-            <tr class="border-b border-gray-800">
-              <td class="py-3">intro_video.mp4</td>
-              <td class="py-3">Welcome post</td>
-              <td class="py-3">March 18, 2026 – 2:15 PM</td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
     </main>
   </div>
 
@@ -199,14 +137,8 @@
     const weekly = document.getElementById("weeklyOptions");
     const contentRemaining = document.getElementById("contentRemaining");
 
-    const pendingTable = document.getElementById("pendingTable");
-
-    function getPendingCount() {
-      return pendingTable.querySelectorAll("tr").length;
-    }
-
     function calculateContentRemaining() {
-      const P = getPendingCount();
+      const P = 10; // placeholder since pending posts moved to another page
 
       if (frequency.value === "hourly") {
         const start = document.getElementById("hourlyStart").value;
