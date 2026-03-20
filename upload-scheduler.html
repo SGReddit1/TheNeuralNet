@@ -11,7 +11,7 @@
   <!-- TOP BAR -->
   <div class="w-full flex justify-between items-center px-6 py-4 border-b border-gray-800 bg-[#111111]">
     <div class="flex items-center gap-3">
-      <img src="./logo.png">
+      <img src="logo.png" class="h-10 w-10" />
       <span class="text-xl font-semibold tracking-wide">The Neural Net</span>
     </div>
 
@@ -71,7 +71,6 @@
           <thead>
             <tr class="border-b border-gray-700 text-gray-400">
               <th class="py-2">Upload Name</th>
-              <th class="py-2">Description</th>
               <th class="py-2">Uploaded Date</th>
             </tr>
           </thead>
@@ -81,7 +80,6 @@
             <!-- FAKE ROW FOR TIKTOK REVIEW -->
             <tr class="border-b border-gray-800">
               <td class="py-3">morning_motivation.mp4</td>
-              <td class="py-3">Daily post for TikTok & IG</td>
               <td class="py-3">March 20, 2026</td>
             </tr>
 
@@ -106,7 +104,6 @@
 
         row.innerHTML = `
           <td class="py-3">${file.name}</td>
-          <td class="py-3">—</td>
           <td class="py-3">${new Date().toLocaleDateString()}</td>
         `;
 
