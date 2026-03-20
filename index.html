@@ -5,15 +5,13 @@
   <title>The Neural Net</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The Neural Net is a tool that connects to TikTok via OAuth to manage posting permissions and automate content workflows." />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       background: radial-gradient(circle at top, #181b2f 0, #050509 55%);
       color: #f5f5f7;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
-      padding: 32px 16px;
-      display: flex;
-      justify-content: center;
     }
     .shell {
       max-width: 880px;
@@ -138,60 +136,94 @@
   </style>
 </head>
 <body>
-  <main class="shell">
-    <header class="header">
-      <div class="logo">
-        <img src="logo.png" alt="The Neural Net logo" />
-      </div>
-      <div class="title-block">
-        <h1>The Neural Net</h1>
-        <p>A TikTok-connected tool for managing posting permissions and automated content workflows.</p>
-        <div class="badge-row">
-          <span class="badge accent">TikTok OAuth</span>
-          <span class="badge">Content workflow utility</span>
-          <span class="badge">Web/Desktop</span>
-        </div>
-      </div>
-    </header>
+  <!-- TOP BAR -->
+  <div class="w-full flex justify-between items-center px-6 py-4 border-b border-gray-800 bg-[#111111]">
+    <div class="flex items-center gap-3">
+      <img src="logo.png" class="h-10 w-10 object-contain" />
+      <span class="text-xl font-semibold tracking-wide">The Neural Net</span>
+    </div>
+    <button class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-sm font-medium">
+      Logout
+    </button>
+  </div>
 
-    <section class="grid">
-      <section class="card">
-        <h2>What The Neural Net does</h2>
-        <p>
-          The Neural Net allows a TikTok user to securely authenticate with TikTok using OAuth and
-          manage posting permissions for automated or semi-automated content workflows.
-        </p>
-        <ul>
-          <li>Secure TikTok login via official OAuth flow</li>
-          <li>Granular control over granted permissions and scopes</li>
-          <li>Support for sandbox and development environments</li>
-          <li>Designed for creators and teams</li>
-        </ul>
-      </section>
+  <div class="flex">
+    <!-- SIDEBAR -->
+    <aside class="w-60 h-screen border-r border-gray-800 bg-[#111111] p-6">
+      <nav class="flex flex-col gap-4 text-gray-400">
+        <a href="index.html" class="text-white font-semibold bg-[#1a1a1a] px-3 py-2 rounded">
+          Home
+        </a>
+        <a href="upload_scheduler.html" class="hover:text-white px-3 py-2 rounded">
+          Uploads
+        </a>
+        <a href="scheduler.html" class="hover:text-white px-3 py-2 rounded">
+          Scheduler
+        </a>
+        <a href="my_schedule.html" class="hover:text-white px-3 py-2 rounded">
+          View My Schedule
+        </a>
+      </nav>
+    </aside>
 
-      <section class="card">
-        <h2>Platform & compliance</h2>
-        <p>
-          This app integrates with TikTok’s official APIs and follows platform policies. It is built
-          to be transparent, minimal, and privacy-conscious.
-        </p>
-        <div class="meta">
-          <span>Platform: Web/Desktop</span>
-          <span>Category: Tools & Utilities</span>
-          <span>Region: Global (English)</span>
-        </div>
-      </section>
-    </section>
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex justify-center items-start p-10">
+      <main class="shell">
+        <header class="header">
+          <div class="logo">
+            <img src="logo.png" alt="The Neural Net logo" />
+          </div>
+          <div class="title-block">
+            <h1>The Neural Net</h1>
+            <p>A TikTok-connected tool for managing posting permissions and automated content workflows.</p>
+            <div class="badge-row">
+              <span class="badge accent">TikTok OAuth</span>
+              <span class="badge">Content workflow utility</span>
+              <span class="badge">Web/Desktop</span>
+            </div>
+          </div>
+        </header>
 
-    <footer class="footer">
-      <div class="links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-      </div>
-      <div>
-        Official site: https://sgreddit1.github.io/theneuralnet/
-      </div>
-    </footer>
-  </main>
+        <section class="grid">
+          <section class="card">
+            <h2>What The Neural Net does</h2>
+            <p>
+              The Neural Net allows a TikTok user to securely authenticate with TikTok using OAuth and
+              manage posting permissions for automated or semi-automated content workflows.
+            </p>
+            <ul>
+              <li>Secure TikTok login via official OAuth flow</li>
+              <li>Granular control over granted permissions and scopes</li>
+              <li>Support for sandbox and development environments</li>
+              <li>Designed for creators and teams</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2>Platform & compliance</h2>
+            <p>
+              This app integrates with TikTok’s official APIs and follows platform policies. It is built
+              to be transparent, minimal, and privacy-conscious.
+            </p>
+            <div class="meta">
+              <span>Platform: Web/Desktop</span>
+              <span>Category: Tools & Utilities</span>
+              <span>Region: Global (English)</span>
+            </div>
+          </section>
+        </section>
+
+        <footer class="footer">
+          <div class="links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+          </div>
+          <div>
+            Official site: https://sgreddit1.github.io/theneuralnet/
+          </div>
+        </footer>
+      </main>
+    </main>
+  </div>
 </body>
 </html>
