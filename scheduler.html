@@ -60,17 +60,17 @@
 
         <!-- Hourly Options -->
         <div id="hourlyOptions" class="schedule-block">
-          <label class="block mb-2 text-gray-400">Post Every Hour At</label>
-          <input type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
-
           <label class="block mb-2 text-gray-400">Do Not Post Between</label>
           <div class="flex gap-4 mb-4">
-            <input type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-1/2">
-            <input type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-1/2">
+            <input id="hourlyStart" type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-1/2">
+            <input id="hourlyEnd" type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-1/2">
           </div>
 
+          <label class="block mb-2 text-gray-400">Maximum Posts Per Day</label>
+          <input id="maxPosts" type="number" min="1" value="5" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
+
           <label class="block mb-2 text-gray-400">Timezone</label>
-          <select class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-full">
+          <select id="timezone" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-full">
             <option>America/Chicago (CST/CDT)</option>
           </select>
         </div>
@@ -78,7 +78,7 @@
         <!-- Daily Options -->
         <div id="dailyOptions" class="schedule-block hidden">
           <label class="block mb-2 text-gray-400">Post Daily At</label>
-          <input type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
+          <input id="dailyTime" type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
 
           <label class="block mb-2 text-gray-400">Timezone</label>
           <select class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-full">
@@ -89,7 +89,7 @@
         <!-- Weekly Options -->
         <div id="weeklyOptions" class="schedule-block hidden">
           <label class="block mb-2 text-gray-400">Day of Week</label>
-          <select class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
+          <select id="weeklyDay" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
             <option>Monday</option>
             <option>Tuesday</option>
             <option>Wednesday</option>
@@ -100,13 +100,30 @@
           </select>
 
           <label class="block mb-2 text-gray-400">Post At</label>
-          <input type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
+          <input id="weeklyTime" type="time" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 mb-4 w-full">
 
           <label class="block mb-2 text-gray-400">Timezone</label>
           <select class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-full">
             <option>America/Chicago (CST/CDT)</option>
           </select>
         </div>
+      </div>
+
+      <!-- CONTENT REMAINING -->
+      <div class="border border-gray-700 rounded-lg p-6 bg-[#111111] mb-10">
+        <h2 class="text-lg font-medium mb-4">Content Remaining</h2>
+
+        <p id="contentRemaining" class="text-gray-300 mb-4">
+          <!-- Filled dynamically -->
+        </p>
+
+        <label class="block mb-2 text-gray-400">Notify me when I have fewer than:</label>
+        <select id="notifyThreshold" class="bg-[#1a1a1a] border border-gray-700 rounded p-3 w-full">
+          <option>5</option>
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+        </select>
       </div>
 
       <!-- PENDING POSTS TABLE -->
@@ -174,12 +191,58 @@
     </main>
   </div>
 
-  <!-- SCRIPT FOR SCHEDULE SWITCHING -->
+  <!-- SCRIPT FOR SCHEDULE SWITCHING + CONTENT REMAINING -->
   <script>
     const frequency = document.getElementById("frequency");
     const hourly = document.getElementById("hourlyOptions");
     const daily = document.getElementById("dailyOptions");
     const weekly = document.getElementById("weeklyOptions");
+    const contentRemaining = document.getElementById("contentRemaining");
+
+    const pendingTable = document.getElementById("pendingTable");
+
+    function getPendingCount() {
+      return pendingTable.querySelectorAll("tr").length;
+    }
+
+    function calculateContentRemaining() {
+      const P = getPendingCount();
+
+      if (frequency.value === "hourly") {
+        const start = document.getElementById("hourlyStart").value;
+        const end = document.getElementById("hourlyEnd").value;
+        const maxPosts = parseInt(document.getElementById("maxPosts").value);
+
+        if (!start || !end || !maxPosts) {
+          contentRemaining.textContent = "Set your hourly schedule to calculate content remaining.";
+          return;
+        }
+
+        const startHour = parseInt(start.split(":")[0]);
+        const endHour = parseInt(end.split(":")[0]);
+
+        let blocked = 0;
+        if (endHour > startHour) {
+          blocked = endHour - startHour;
+        } else {
+          blocked = (24 - startHour) + endHour;
+        }
+
+        const available = 24 - blocked;
+        const postsPerHour = maxPosts / available;
+        const hoursRemaining = Math.floor(P / postsPerHour);
+
+        contentRemaining.textContent = `You have ${hoursRemaining} hours of content remaining.`;
+      }
+
+      if (frequency.value === "daily") {
+        contentRemaining.textContent = `You have ${P} days of content remaining.`;
+      }
+
+      if (frequency.value === "weekly") {
+        contentRemaining.textContent = `You have ${P} weeks of content remaining.`;
+      }
+    }
 
     frequency.addEventListener("change", () => {
       hourly.classList.add("hidden");
@@ -189,7 +252,12 @@
       if (frequency.value === "hourly") hourly.classList.remove("hidden");
       if (frequency.value === "daily") daily.classList.remove("hidden");
       if (frequency.value === "weekly") weekly.classList.remove("hidden");
+
+      calculateContentRemaining();
     });
+
+    document.addEventListener("input", calculateContentRemaining);
+    calculateContentRemaining();
   </script>
 
 </body>
